@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeedType Challenge</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f0f0f0;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .game-container {
+            width: 90%;
+            max-width: 800px;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .word-display {
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            letter-spacing: 2px;
+        }
+
+        .input-field {
+            width: 90%;
+            max-width: 600px;
+            padding: 1.2rem;
+            font-size: 1.5rem;
+            text-align: center;
+            border: 3px solid var(--primary-color);
+            border-radius: 12px;
+            margin: 2rem auto;
+            display: block;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            color: var(--primary-color);
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.3);
+            background: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .input-field {
+                width: 85%;
+                font-size: 1.2rem;
+                padding: 1rem;
+                margin: 1.5rem auto;
+            }
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 1rem 0;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 1rem;
+            background: #ecf0f1;
+            border-radius: 5px;
+            min-width: 100px;
+        }
+
+        .timer {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .correct {
+            color: var(--success-color);
+        }
+
+        .incorrect {
+            color: var(--error-color);
+        }
+
+        .highlight {
+            animation: pulse 0.5s;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        /* Add these new button styles */
+        .game-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .game-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .start-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .pause-btn {
+            background-color: #f1c40f;
+            color: white;
+        }
+
+        .restart-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .game-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .end-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .navigation-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .nav-btn {
+            padding: 10px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: var(--secondary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .nav-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .nav-btn i {
+            font-size: 1.2rem;
+        }
+        .sound-btn {
+            background-color: #9b59b6;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="game-container">
+        <div class="header">
+            <h1>SpeedType Challenge</h1>
+            <div class="timer">240</div>
+        </div>
+        <div class="game-controls">
+
+            <h2>Hard Level</h2>
+            <button class="game-btn start-btn">Start</button>
+            <button class="game-btn pause-btn" disabled>Pause</button>
+            <button class="game-btn restart-btn" onclick="location.reload()">Restart</button>
+        </div>
+        <div class="word-display"></div>
+        <input type="text" class="input-field" autofocus disabled>
+        <div class="stats-container">
+            <!-- ... existing stat boxes ... -->
+            <div class="stat-box">
+                <div>WPM</div>
+                <div class="wpm">0</div>
+            </div>
+            <div class="stat-box">
+                <div>Accuracy</div>
+                <div class="accuracy">100%</div>
+            </div>
+        </div>
+        <!-- Add this to index.html's game-container -->
+        <button class="nav-btn" onclick="window.location.href='index.html'" style="margin-top: 20px;">
+            <i class="fas fa-home"></i>
+            Back to Main Menu
+        </button>
+        <p style="margin-right: auto;">Boosting speed/accuracy through adaptive drills and real-time feedback.</p>
+        <p style="margin-right: auto;">Gamifying progress with achievements, unlockable themes, and story-driven
+            challenges.</p>
+        <p>Just test you are capacity.</p>
+          <!-- Add to game-controls div -->
+          <button class="game-btn sound-btn" onclick="game.toggleSound()">
+            Sound: ON
+        </button>
+
+    </div>
+
+    <script>
+
+        function getUsername() {
+            return localStorage.getItem('username') || 'Guest';
+        }
+
+
+        class TypingGame {
+            constructor() {
+                this.words = {
+
+
+                    hard: ['Pneumonoultramicbbutvyrctciro',
+                        'Supercalifrauvyvhgvnuhhgilist',
+                        'Hippopotomcrtdestdseronstrose',
+                        'Pneumolthgkdhfghdhkgdhracisyv',
+                        'Superrghlliekdsjfiwcalifravyt',
+                        'Hipotomcrdesqwertyuioplmnhanb',
+                        'Flocinasdfghjklxdfflauhptremx',
+                        'Antdisesbghjyukmnljhfdeelhmryk',
+                        'Pseudohypadfghtyiyikuililrtnic',
+                        'Hexakosintpsedfhjiuycdfdlihbgl',
+                        'Honorificawasrdfcvghyklkbludm',
+                        'Otrhinlayasdfghjkzxcvbngzcpfe',
+                        'Psychoneurodikjhyugtrfdesxcvbmt',
+                        'Spectroqsdcerfgbthnmjklfhuvmnjk',
+                        'Dichlorftanasdcvbhjkmnhgrhebgy',
+                        'Thyroparmdzxcvedcgyhnkmjhyugcq',
+                        'Electrogphavibqscfrtgvbujmpn',
+                        'Imunlectrzxdrffgedcvbhujmphyosd',
+                        'Radiomqscvbnmkihgedcfvnpquvwxyt',
+                        'Countervljwzsasdfcghkuyiokhvmg',
+                        'Incompqazxcvbnmasdfghrhsbtaydx',
+                        'Interdwsxcvbnkokmijnumoasfgvkl',
+                        'Crystlfqazxcfgyuikmnbvngiqpobh',
+                        'Anthroedcrfvtgbyhnmukpmblgicze',
+                        'Tetrahaghjoijhvcdfghlkydocnibsu',
+                        'Magnetoepchlqwdfhjijhgdcvbjnsv',
+                        'Bacteriodfgbhikjfgbnhylpsxz',
+                        'Chemolitauzrnvd',
+                        'Deoxyribnpqtmch',
+                        'Hyperchstzfwvla',
+                        'Hypobtlkmngrdse',
+                        'Pneumocjvxahytz',
+                        'Trichloasdfghjkljuyirfupbmsn']
+                };
+                this.sounds = {
+                    correct: this.createAudio('correct-156911.mp3'),
+                    error: this.createAudio('errror-8-206492.mp3'),
+                    keypress: this.createAudio('keyboard5-88069.mp3')
+                };
+
+
+                this.settings = JSON.parse(localStorage.getItem('typingSettings')) || {
+                    sound: true,
+                    difficulty: 'hard',
+                    theme: 'light'
+                };
+
+                this.currentWord = '';
+                this.inputField = document.querySelector('.input-field');
+                this.wordDisplay = document.querySelector('.word-display');
+                this.timerElement = document.querySelector('.timer');
+                this.wpmElement = document.querySelector('.wpm');
+                this.accuracyElement = document.querySelector('.accuracy');
+
+                this.timeLeft = 240;
+                this.score = 0;
+                this.totalTyped = 0;
+                this.correctTyped = 0;
+                this.gameActive = false;
+
+                this.startButton = document.querySelector('.start-btn');
+                this.pauseButton = document.querySelector('.pause-btn');
+                this.timerInterval = null;
+
+                this.initialize();
+                const soundBtn = document.querySelector('.sound-btn');
+                if (soundBtn) {
+                    soundBtn.textContent = `Sound: ${this.settings.sound ? 'ON' : 'OFF'}`;
+                }
+            }
+
+            initialize() {
+                this.inputField.addEventListener('input', this.handleInput.bind(this));
+                this.startButton.addEventListener('click', () => this.startGame());
+                this.pauseButton.addEventListener('click', () => this.togglePause());
+
+                // Disable input initially
+                this.inputField.disabled = true;
+
+            }
+
+            startGame() {
+                this.gameActive = true;
+                this.inputField.disabled = false;
+                this.inputField.focus();
+                this.startButton.disabled = true;
+                this.pauseButton.disabled = false;
+                this.timeLeft = 240;
+                this.timerElement.textContent = this.timeLeft;
+                this.generateNewWord('hard');
+                this.startTimer();
+            }
+            togglePause() {
+                if (this.gameActive) {
+                    // Pause the game
+                    this.gameActive = false;
+                    this.inputField.disabled = true;
+                    this.pauseButton.textContent = 'Resume';
+                    clearInterval(this.timerInterval);
+                } else {
+                    // Resume the game
+                    this.gameActive = true;
+                    this.inputField.disabled = false;
+                    this.inputField.focus();
+                    this.pauseButton.textContent = 'Pause';
+                    this.startTimer();
+                }
+            }
+            toggleSound() {
+                this.settings.sound = !this.settings.sound;
+                document.querySelector('.sound-btn').textContent =
+                    `Sound: ${this.settings.sound ? 'ON' : 'OFF'}`;
+                localStorage.setItem('typingSettings', JSON.stringify(this.settings));
+            }
+            generateNewWord(difficulty) {
+                const wordList = this.words[difficulty];
+                this.currentWord = wordList[Math.floor(Math.random() * wordList.length)];
+                this.wordDisplay.innerHTML = this.currentWord
+                    .split('')
+                    .map(char => `<span>${char}</span>`)
+                    .join('');
+            }
+
+            handleInput(e) {
+                if (!this.gameActive) return;
+
+                const input = e.target.value;
+                this.totalTyped++;
+                // Play keypress sound only when valid typing occurs
+                if (input.length > 0 && this.settings.sound) {
+                    this.playSound('keypress');
+                }
+                this.wordDisplay.querySelectorAll('span').forEach((charSpan, index) => {
+                    const char = input[index] || '';
+                    charSpan.className = char === this.currentWord[index] ? 'correct' : 'incorrect';
+                });
+
+                if (input === this.currentWord) {
+                    this.correctTyped += this.currentWord.length;
+                    this.score++;
+                    this.inputField.value = '';
+                    this.wordDisplay.classList.add('highlight');
+                    setTimeout(() => this.wordDisplay.classList.remove('highlight'), 200);
+                    this.generateNewWord('hard');
+                }
+
+                this.updateStats();
+                if (input === this.currentWord) {
+                    this.playSound('correct');
+                } else if (input.length > this.currentWord.length) {
+                    this.playSound('error');
+                }
+            }
+            playSound(type) {
+                if (!this.settings.sound) return;
+
+                try {
+                    this.sounds[type].currentTime = 0; // Reset audio to start
+                    this.sounds[type].play();
+                } catch (error) {
+                    console.error('Error playing sound:', error);
+                }
+            }
+            startTimer() {
+                this.timerInterval = setInterval(() => {
+                    this.timeLeft--;
+                    this.timerElement.textContent = this.timeLeft;
+
+                    if (this.timeLeft <= 0) {
+                        clearInterval(this.timerInterval);
+                        this.endGame();
+                    }
+                }, 1000);
+            }
+            createAudio(src) {
+                const audio = new Audio(src);
+                audio.addEventListener('error', (e) => {
+                    console.error('Audio error:', e);
+                });
+                return audio;
+            }
+
+            updateStats() {
+                const accuracy = ((this.correctTyped / this.totalTyped) * 100 || 0).toFixed(1);
+                const wpm = ((this.correctTyped / 5) / ((240 - this.timeLeft) / 240)).toFixed(1);
+
+                this.wpmElement.textContent = wpm;
+                this.accuracyElement.textContent = `${accuracy}%`;
+            }
+
+
+            endGame() {
+                this.gameActive = false;
+                this.startButton.disabled = false;
+                this.pauseButton.disabled = true;
+                this.inputField.disabled = true;
+                // alert(`Game Over! Score: ${this.score} | WPM: ${this.wpmElement.textContent} | Accuracy: ${this.accuracyElement.textContent}`);
+
+                const modalHTML = `
+        <div class="end-modal">
+            <h2>Game Over!</h2>
+            <p> Score: ${this.score}</p>
+            <p> WPM: ${this.wpmElement.textContent}</p>
+            <p> Accuracy: ${this.accuracyElement.textContent}</p>
+            <button onclick="location.reload()">Play Again</button>
+        </div>
+    `;
+                document.body.insertAdjacentHTML('beforeend', modalHTML);
+            }
+        }
+
+        // Initialize game
+        const game = new TypingGame();
+    </script>
+</body>
+
+</html>

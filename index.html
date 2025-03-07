@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Levels</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .levels-container {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .level {
+            font-size: 2.5rem;
+            margin: 1rem 0;
+            padding: 1rem 2rem;
+            color: white;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        .level:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+
+        .easy {
+            background-color: #4CAF50;
+        }
+
+        .medium {
+            background-color: #FFC107;
+        }
+
+        .hard {
+            background-color: #F44336;
+        }
+
+        .extreme {
+            background-color: #9C27B0;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .level {
+                font-size: 2rem;
+                padding: 0.8rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Add to existing CSS */
+        .user-info {
+
+            position: fixed;
+            top: 50px;
+            right: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 25px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .user-info img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .user-info span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .user-info button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s;
+        }
+
+        .user-info button:hover {
+            color: #333;
+        }
+
+        /* Add to existing CSS */
+        .copyright {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 16px;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .copyright:hover {
+            background: rgba(255, 255, 255, 1);
+            color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .copyright-popup {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            max-width: 300px;
+            display: none;
+            z-index: 1001;
+        }
+
+        .copyright-popup.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #starButton {
+            position: fixed;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        #starButton::before {
+            content: '🎮';
+            font-size: 80px;
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            display: block;
+        }
+
+        #starButton:hover {
+            transform: scale(1.4);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Game container styling */
+        .game-container {
+            display: none;
+            text-align: center;
+        }
+
+
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="starButton">
+        <h1>Ocky Typing</h1>
+        <h1>Touch - Me</h1>
+    </button>
+    <div class="user-info">
+        <img src="ed6f13314ba7144d4d8b99203490488b.jpg" alt="User Avatar">
+        <span id="usernameDisplay">Guest</span>
+        <button onclick="editUsername()">✎</button>
+
+    </div>
+
+
+    <div class="game-container" id="gameContainer">
+        <!-- Your existing game content here -->
+
+        <div class="levels-container">
+            <h1>Select Difficulty Level</h1>
+            <div href="page1.html" class="level easy">
+                <a style="color: #f0f0f0; text-decoration: none;" href="page1.html">Easy</a>
+            </div>
+            <div href="page2.html" class="level medium">
+                <a style="color: #f0f0f0; text-decoration: none; " href="page2.html">Medium</a>
+            </div>
+            <div href="page3.html" class="level hard">
+                <a style="color: #f0f0f0; text-decoration: none;" href="page3.html">Hard</a>
+            </div>
+
+        </div>
+        <p><strong>Easy</strong></p><p>Build foundational skills with minimal frustration.</p>
+        <p><strong>Medium</strong></p><p>Balance speed and accuracy for gradual improvement.</p>
+        <p><strong>Hard</strong></p><p>Push limits with complex spelling and typing challenges.</p>
+        <p>@ Choose a level based on your skill and goals! 🚀⌨️</p>
+    </div>
+
+    <audio id="startSound">
+        <source src="mouse-click-290204.mp3" type="audio/wav">
+    </audio>
+
+    <script>
+
+        const starButton = document.getElementById('starButton');
+        const gameContainer = document.getElementById('gameContainer');
+
+        function startGame() {
+            // Play start sound
+            const sound = document.getElementById('startSound');
+            sound.currentTime = 0;
+            sound.play();
+
+            // Hide star button and show game
+            starButton.classList.add('hidden');
+            gameContainer.style.display = 'block';
+
+            // Initialize your game here
+            console.log('Game started!');
+            // Add your game initialization code
+        }
+
+        starButton.addEventListener('click', startGame);
+
+        // Optional: Show star button again when game ends
+        function showStarButton() {
+            starButton.classList.remove('hidden');
+            gameContainer.style.display = 'none';
+        }
+
+        // User management functions
+        function getUsername() {
+            return localStorage.getItem('username') || 'Guest';
+        }
+
+        function saveUsername(username) {
+
+            localStorage.setItem('username', username);
+        }
+
+        function updateUsernameDisplay() {
+            document.getElementById('usernameDisplay').textContent = getUsername();
+        }
+
+        function editUsername() {
+            const newUsername = prompt('Enter your username:', getUsername());
+            if (newUsername && newUsername.trim() !== '') {
+                saveUsername(newUsername.trim());
+                updateUsernameDisplay();
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            updateUsernameDisplay();
+        });
+        // Copyright popup functionality
+        function toggleCopyrightPopup() {
+            const popup = document.getElementById('copyrightPopup');
+            popup.classList.toggle('show');
+
+            // Close popup when clicking outside
+            if (popup.classList.contains('show')) {
+                document.addEventListener('click', closePopupOnOutsideClick);
+            } else {
+                document.removeEventListener('click', closePopupOnOutsideClick);
+            }
+        }
+
+        function closePopupOnOutsideClick(event) {
+            const popup = document.getElementById('copyrightPopup');
+            const copyrightButton = document.querySelector('.copyright');
+
+            if (!popup.contains(event.target) && !copyrightButton.contains(event.target)) {
+                popup.classList.remove('show');
+                document.removeEventListener('click', closePopupOnOutsideClick);
+            }
+        }
+        document.querySelector('.copyright').innerHTML = `© ${new Date().getFullYear()} Sliding Toys`;
+    </script>
+    <!-- Add this at the bottom of your body -->
+    <div class="copyright" onclick="toggleCopyrightPopup()">
+        © 2025 Ocky GAMES
+    </div>
+
+    <div class="copyright-popup" id="copyrightPopup">
+        <h3>Copyright Information</h3>
+        <p>All rights reserved. The content, design, and code of this application are protected by copyright law.</p>
+        <p>You may not reproduce, distribute, or create derivative works without explicit permission.</p>
+        <p>For inquiries, please contact: prudhvigaddam5555@gmail.com</p>
+
+    </div>
+</body>
+
+</html>
