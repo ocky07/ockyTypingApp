@@ -122,7 +122,7 @@
             }
         }
 
-        /* Add these new button styles */
+       
         .game-controls {
             display: flex;
             gap: 10px;
@@ -222,7 +222,7 @@
         </div>
         <div class="game-controls">
 
-            <h2>Hard Level</h2>
+            <h2>Medium Level</h2>
             <button class="game-btn start-btn">Start</button>
             <button class="game-btn pause-btn" disabled>Pause</button>
             <button class="game-btn restart-btn" onclick="location.reload()">Restart</button>
@@ -230,7 +230,7 @@
         <div class="word-display"></div>
         <input type="text" class="input-field" autofocus disabled>
         <div class="stats-container">
-            <!-- ... existing stat boxes ... -->
+           
             <div class="stat-box">
                 <div>WPM</div>
                 <div class="wpm">0</div>
@@ -240,7 +240,7 @@
                 <div class="accuracy">100%</div>
             </div>
         </div>
-        <!-- Add this to index.html's game-container -->
+       
         <button class="nav-btn" onclick="window.location.href='index.html'" style="margin-top: 20px;">
             <i class="fas fa-home"></i>
             Back to Home
@@ -460,7 +460,7 @@
                 this.startButton.disabled = false;
                 this.pauseButton.disabled = true;
                 this.inputField.disabled = true;
-                // alert(`Game Over! Score: ${this.score} | WPM: ${this.wpmElement.textContent} | Accuracy: ${this.accuracyElement.textContent}`);
+                
 
                 const modalHTML = `
         <div class="end-modal">
