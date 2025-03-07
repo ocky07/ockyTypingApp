@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Levels</title>
+    <title>Ocky Games</title>
     <style>
         body {
             margin: 0;
@@ -117,7 +117,7 @@
             color: #333;
         }
 
-        /* Add to existing CSS */
+        
         .copyright {
             position: fixed;
             bottom: 20px;
@@ -207,7 +207,7 @@
             display: none;
         }
 
-        /* Game container styling */
+       
         .game-container {
             display: none;
             text-align: center;
@@ -235,7 +235,7 @@
 
 
     <div class="game-container" id="gameContainer">
-        <!-- Your existing game content here -->
+       
 
         <div class="levels-container">
             <h1>Select Difficulty Level</h1>
@@ -277,12 +277,12 @@
 
             // Initialize your game here
             console.log('Game started!');
-            // Add your game initialization code
+           
         }
 
         starButton.addEventListener('click', startGame);
 
-        // Optional: Show star button again when game ends
+      
         function showStarButton() {
             starButton.classList.remove('hidden');
             gameContainer.style.display = 'none';
@@ -338,7 +338,7 @@
         }
         document.querySelector('.copyright').innerHTML = `© ${new Date().getFullYear()} Sliding Toys`;
     </script>
-    <!-- Add this at the bottom of your body -->
+   
     <div class="copyright" onclick="toggleCopyrightPopup()">
         © 2025 Ocky GAMES
     </div>
