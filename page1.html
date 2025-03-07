@@ -122,7 +122,7 @@
             }
         }
 
-       
+
         .game-controls {
             display: flex;
             gap: 10px;
@@ -211,6 +211,13 @@
             background-color: #9b59b6;
             color: white;
         }
+        .user-info img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 
@@ -219,6 +226,9 @@
     <div class="game-container">
         <div class="header">
             <h1>Ocky SpeedType Challenge</h1>
+            <div class="user-info">
+                <img src="163_U1RVRElPIENBTSA1NTUtNjM.jpg" alt="User Avatar">
+            </div>
             <div class="timer">60</div>
         </div>
         <div class="game-controls">
@@ -231,7 +241,7 @@
         <div class="word-display"></div>
         <input type="text" class="input-field" autofocus disabled>
         <div class="stats-container">
-            
+
             <div class="stat-box">
                 <div>WPM</div>
                 <div class="wpm">0</div>
@@ -241,7 +251,7 @@
                 <div class="accuracy">100%</div>
             </div>
         </div>
-       
+
         <button class="nav-btn" onclick="window.location.href='index.html'" style="margin-top: 20px;">
             <i class="fas fa-home"></i>
             Back to Home
@@ -250,7 +260,7 @@
         <p style="margin-right: auto;">Gamifying progress with achievements, unlockable themes, and story-driven
             challenges.</p>
         <p>Just test you are capacity.</p>
-       
+
         <button class="game-btn sound-btn" onclick="game.toggleSound()">
             Sound: ON
         </button>
@@ -296,7 +306,7 @@
                         'mom', 'dad', 'baby', 'aunt', 'uncle', 'brother', 'sister', 'grandma', 'grandpa', 'family'
                     ]
                 };
-               
+
                 this.sounds = {
                     correct: this.createAudio('correct-156911.mp3'),
                     error: this.createAudio('errror-8-206492.mp3'),
@@ -338,7 +348,7 @@
                 this.startButton.addEventListener('click', () => this.startGame());
                 this.pauseButton.addEventListener('click', () => this.togglePause());
 
-                // Disable input initially
+
                 this.inputField.disabled = true;
 
             }
@@ -460,8 +470,6 @@
                 this.startButton.disabled = false;
                 this.pauseButton.disabled = true;
                 this.inputField.disabled = true;
-
-            
 
                 const modalHTML = `
         <div class="end-modal">
