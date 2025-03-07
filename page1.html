@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpeedType Challenge</title>
+    <title>Ocky SpeedType Challenge</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -122,7 +122,7 @@
             }
         }
 
-        /* Add these new button styles */
+       
         .game-controls {
             display: flex;
             gap: 10px;
@@ -231,7 +231,7 @@
         <div class="word-display"></div>
         <input type="text" class="input-field" autofocus disabled>
         <div class="stats-container">
-            <!-- ... existing stat boxes ... -->
+            
             <div class="stat-box">
                 <div>WPM</div>
                 <div class="wpm">0</div>
@@ -241,7 +241,7 @@
                 <div class="accuracy">100%</div>
             </div>
         </div>
-        <!-- Add this to index.html's game-container -->
+       
         <button class="nav-btn" onclick="window.location.href='index.html'" style="margin-top: 20px;">
             <i class="fas fa-home"></i>
             Back to Home
@@ -250,7 +250,7 @@
         <p style="margin-right: auto;">Gamifying progress with achievements, unlockable themes, and story-driven
             challenges.</p>
         <p>Just test you are capacity.</p>
-        <!-- Add to game-controls div -->
+       
         <button class="game-btn sound-btn" onclick="game.toggleSound()">
             Sound: ON
         </button>
@@ -461,7 +461,7 @@
                 this.pauseButton.disabled = true;
                 this.inputField.disabled = true;
 
-                // alert(`Game Over! Score: ${this.score} | WPM: ${this.wpmElement.textContent} | Accuracy: ${this.accuracyElement.textContent}`);
+            
 
                 const modalHTML = `
         <div class="end-modal">
